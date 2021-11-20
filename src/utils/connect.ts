@@ -13,7 +13,7 @@ async function dbConnect() {
 }
 
 mongoose.connection.on("connecting", () => {
-  logger.info("Connecting to database...");
+  logger.info("⌛ Connecting to database...");
 });
 
 mongoose.connection.on("connected", () => logger.info("✅ Databese Connected"));
