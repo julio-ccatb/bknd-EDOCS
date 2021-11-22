@@ -39,14 +39,16 @@ userSchema.pre("save", async function (next) {
 // Compares the initial password with the encrypted
 // This === object in normal function
 
-userSchema.methods.comparePasswords = async function (
+userSchema.methods.comparePassword = async function (
   candidatePassword: string
-): Promise<Boolean> {
+): Promise<boolean> {
   let user = this as UserDocument;
 
-  return bcrypt.compare(candidatePassword, user.password).catch((e) => false);
+  return await bcrypt
+    .compare(candidatePassword, user.password)
+    .catch((e) => false);
 };
 
-const UserModel = mongoose.model<UserDocument>("user", userSchema);
+const UserModel = mongoose.model<UserDocument>("User", userSchema);
 
 export default UserModel;

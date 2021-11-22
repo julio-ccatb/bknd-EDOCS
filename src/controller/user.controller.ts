@@ -19,7 +19,7 @@ export const createUserHandler = async (
     loggger.info("✅ Endpoint reched succesfully");
 
     const user = await createUser(req.body);
-    return res.status(201).send(omit(user.toJSON(), "password"));
+    return res.status(201).send(omit(user, "password"));
   } catch (e: any) {
     loggger.error(e.message);
     res.status(409).send({ err: e.message });
