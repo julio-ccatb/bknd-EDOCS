@@ -1,5 +1,10 @@
 import { Router } from "express";
-import { createSessionHandler } from "../controller/session.controller";
+import {
+  createSessionHandler,
+  deleteSessionHandler,
+  getUserSessionHandler,
+} from "../controller/session.controller";
+import { requireUser } from "../middleware/requireUser";
 import { validateResource } from "../middleware/validateResource";
 import { createSessionSchema } from "../schema/session.schema";
 
@@ -8,6 +13,7 @@ const SessionRouter = Router();
 //METHODS
 
 //GET
+SessionRouter.get("/sessions", requireUser, getUserSessionHandler);
 
 //POST
 SessionRouter.post(
@@ -19,5 +25,6 @@ SessionRouter.post(
 //PATCH
 
 //DELETE
+SessionRouter.delete("/sessions", requireUser, deleteSessionHandler);
 
 export default SessionRouter;

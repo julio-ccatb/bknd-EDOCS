@@ -1,2 +1,5 @@
 node_modules
 .env
+
+config/certs/private.pem
+config/certs/public.pem

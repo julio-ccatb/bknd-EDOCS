@@ -1,8 +1,13 @@
 import { Request, Response } from "express";
-import { createSession } from "../service/session.service";
+import {
+  createSession,
+  findSession,
+  updateSession,
+} from "../service/session.service";
 import { validatePassword } from "../service/user.service";
 import { singJWT } from "../utils/jwt.utils";
 import config from "../../config/default";
+import logger from "../utils/logger";
 
 export const createSessionHandler = async (req: Request, res: Response) => {
   // Validate Password
@@ -21,20 +26,37 @@ export const createSessionHandler = async (req: Request, res: Response) => {
 
   // Create Access Token
 
-  const accesToken = singJWT(
+  const accessToken = singJWT(
     { ...user, session: session._id },
-    { expiresIn: config.accesTokenTtl }
+    { expiresIn: config.accessTokenTtl }
   );
 
-  console.log(accesToken);
   // Create refresh token
 
-  // const refreshToken = singJWT(
-  //   { ...user, session: session._id },
-  //   { expiresIn: config.refreshTokenTtl }
-  // );
+  const refreshToken = singJWT(
+    { ...user, session: session._id },
+    { expiresIn: config.refreshTokenTtl }
+  );
 
   // Return
 
-  return res.status(200).send({ accesToken });
+  return res.status(200).send({ accessToken, refreshToken });
+};
+
+export const getUserSessionHandler = async (req: Request, res: Response) => {
+  const userId = res.locals.user._id;
+
+  const sessions = await findSession({ user: userId, valid: true });
+  return res.status(200).send({ sessions });
+};
+
+export const deleteSessionHandler = async (req: Request, res: Response) => {
+  try {
+    const sessionId = res.locals.user.session;
+    const state = await updateSession({ _id: sessionId }, { valid: false });
+
+    res.status(202).send({ accessToken: null, refreshToken: null });
+  } catch (err: any) {
+    logger.error(err);
+  }
 };
