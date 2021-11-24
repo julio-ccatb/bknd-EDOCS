@@ -1,6 +1,4 @@
 import mongoose from "mongoose";
-
-import config from "config";
 import UserModel, { UserDocument } from "./user.model";
 
 export interface SessionDocument extends mongoose.Document {

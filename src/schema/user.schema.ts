@@ -21,7 +21,7 @@ export const createUserSchema = object({
   }),
 });
 
-//Inpunt to validate
+//Input to validate
 export type createUserInput = Omit<
   TypeOf<typeof createUserSchema>,
   "body.passwordConfirmation"
