@@ -2,7 +2,7 @@ import { object, string, TypeOf } from "zod";
 
 //ZOD Validation
 
-export const createDiviceSchema = object({
+export const createdeviceSchema = object({
   body: object({
     name: string({
       invalid_type_error: "name must be an string",
@@ -33,4 +33,4 @@ export const createDiviceSchema = object({
 
 //input to validate
 
-export type createDiviceInput = TypeOf<typeof createDiviceSchema>;
+export type createdeviceInput = TypeOf<typeof createdeviceSchema>;

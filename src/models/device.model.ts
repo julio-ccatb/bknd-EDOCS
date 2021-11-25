@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
+import RackModel from "./rack.model";
 
-export interface DiviceDocument extends mongoose.Document {
+export interface deviceDocument extends mongoose.Document {
   name: string;
   short_name: string;
   ip: string;
@@ -14,7 +15,7 @@ export interface DiviceDocument extends mongoose.Document {
   updatedAt: Date;
 }
 
-const DiviceSchema = new mongoose.Schema(
+const deviceSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, trim: true },
     short_name: { type: String, default: "", trim: true },
@@ -24,11 +25,11 @@ const DiviceSchema = new mongoose.Schema(
     mac: { type: String, required: true, trim: true },
     frim_ver: { type: String, required: true, trim: true },
     boot_ver: { type: String, required: true, trim: true },
-    rack: { type: String, trim: true },
+    rack: { type: mongoose.Schema.Types.ObjectId, ref: RackModel },
   },
   { timestamps: true }
 );
 
-const DiviceModel = mongoose.model<DiviceDocument>("Divice", DiviceSchema);
+const deviceModel = mongoose.model<deviceDocument>("device", deviceSchema);
 
-export default DiviceModel;
+export default deviceModel;
