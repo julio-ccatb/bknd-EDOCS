@@ -54,8 +54,9 @@ export const deleteSessionHandler = async (req: Request, res: Response) => {
   try {
     const sessionId = res.locals.user.session;
     const state = await updateSession({ _id: sessionId }, { valid: false });
-
-    res.status(202).send({ accessToken: null, refreshToken: null });
+    if (state)
+      return res.status(202).send({ accessToken: null, refreshToken: null });
+    throw new Error("unable to process");
   } catch (err: any) {
     logger.error(err);
   }

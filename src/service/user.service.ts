@@ -1,7 +1,6 @@
 import { omit } from "lodash";
 import { DocumentDefinition, FilterQuery, QueryOptions } from "mongoose";
 import UserModel, { UserDocument } from "../models/user.model";
-import logger from "../utils/logger";
 
 /**
  *

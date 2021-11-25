@@ -5,14 +5,16 @@ import {
   createRackHandler,
 } from "../controller/rack.controller";
 import { validateResource } from "../middleware/validateResource";
-import { createdeviceSchema } from "../schema/device.schema";
 import { createRackSchema } from "../schema/rack.schema";
+import { findRackHandler } from "../controller/rack.controller";
 
 const RackManagerRouter = Router();
-
 //METHODS
 
 //GET
+
+RackManagerRouter.get("/rack/:rack_id", findRackHandler);
+
 //POST
 RackManagerRouter.post(
   "/rack",
@@ -20,14 +22,7 @@ RackManagerRouter.post(
   createRackHandler
 );
 
-RackManagerRouter.post(
-  "/device",
-  validateResource(createdeviceSchema),
-  createdeviceHandler
-);
 //PATCH
-
-RackManagerRouter.patch("/rack/device", adddeviceToRackHandler);
 
 //DELETE
 

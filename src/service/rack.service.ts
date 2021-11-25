@@ -1,8 +1,9 @@
 import { Omit } from "lodash";
-import { DocumentDefinition } from "mongoose";
-import { IdeviceToRack } from "../interface/rack.interface";
-import deviceModel from "../models/device.model";
+import { DocumentDefinition, FilterQuery } from "mongoose";
+import { IdeviceToRack, IRackId } from "../interface/rack.interface";
+import DeviceModel from "../models/device.model";
 import RackModel, { RackDocument } from "../models/rack.model";
+import { deviceDocument } from "../models/device.model";
 
 export const createRack = async (
   input: Omit<DocumentDefinition<RackDocument>, "createdAt" | "updatedAt">
@@ -17,7 +18,7 @@ export const createRack = async (
 
 export const adddeviceToRack = async (input: IdeviceToRack) => {
   let rack = await RackModel.findById(input.rack_id);
-  let device = await deviceModel.findOne({
+  let device = await DeviceModel.findOne({
     _id: input.device_id,
   });
 
@@ -28,9 +29,18 @@ export const adddeviceToRack = async (input: IdeviceToRack) => {
   `);
   }
 
-  device.rack = rack._id;
+  device.rack_id = rack._id;
 
   const saveddevice = await (await device.save()).populate("rack");
   console.log(saveddevice);
   if (saveddevice) return true;
+};
+
+export const findRack = async (query: FilterQuery<deviceDocument>) => {
+  const rack = await RackModel.findOne({ _id: query.rack_id }).lean();
+  const devices = await DeviceModel.find({ query }).lean();
+
+  console.log({ rack, devices });
+
+  return;
 };

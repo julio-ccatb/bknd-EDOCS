@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import deviceModel, { deviceDocument } from "./device.model";
 
 export interface RackDocument extends mongoose.Document {
   name: string;

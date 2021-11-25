@@ -10,7 +10,7 @@ export interface deviceDocument extends mongoose.Document {
   frim_ver: string;
   boot_ver: string;
   location: number;
-  rack: string;
+  rack_id: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -30,6 +30,6 @@ const deviceSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const deviceModel = mongoose.model<deviceDocument>("device", deviceSchema);
+const DeviceModel = mongoose.model<deviceDocument>("device", deviceSchema);
 
-export default deviceModel;
+export default DeviceModel;
