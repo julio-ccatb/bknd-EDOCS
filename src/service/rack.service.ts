@@ -40,7 +40,10 @@ export const findRack = async (query: FilterQuery<deviceDocument>) => {
   const rack = await RackModel.findOne({ _id: query.rack_id }).lean();
   const devices = await DeviceModel.find({ query }).lean();
 
-  console.log({ rack, devices });
+  return { rack, devices };
+};
 
-  return;
+export const getAllRacks = async () => {
+  const racks = await RackModel.find();
+  return racks;
 };

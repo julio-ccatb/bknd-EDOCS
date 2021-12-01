@@ -20,14 +20,14 @@ const PortSchema = new mongoose.Schema(
       ref: deviceModel,
       required: true,
     },
-    target_port: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "port",
-    },
   },
 
   { timestamps: true }
 );
+
+PortSchema.add({
+  target_port: [PortSchema],
+});
 
 const PortModel = mongoose.model<PortDocument>("Port", PortSchema);
 

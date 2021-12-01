@@ -3,6 +3,7 @@ import { createdeviceHandler } from "../controller/device.controller";
 import {
   adddeviceToRackHandler,
   createRackHandler,
+  getAllRacksHandler,
 } from "../controller/rack.controller";
 import { validateResource } from "../middleware/validateResource";
 import { createRackSchema } from "../schema/rack.schema";
@@ -12,6 +13,7 @@ const RackManagerRouter = Router();
 //METHODS
 
 //GET
+RackManagerRouter.get("/rack", getAllRacksHandler);
 
 RackManagerRouter.get("/rack/:rack_id", findRackHandler);
 

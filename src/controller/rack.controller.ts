@@ -1,5 +1,10 @@
 import { Request, Response } from "express";
-import { adddeviceToRack, createRack, findRack } from "../service/rack.service";
+import {
+  adddeviceToRack,
+  createRack,
+  findRack,
+  getAllRacks,
+} from "../service/rack.service";
 
 export const createRackHandler = async (req: Request, res: Response) => {
   try {
@@ -22,5 +27,16 @@ export const adddeviceToRackHandler = async (req: Request, res: Response) => {
 
 export const findRackHandler = async (req: Request, res: Response) => {
   //console.log(req.params);
-  await findRack(req.params);
+
+  try {
+    const rack = await findRack(req.params);
+    if (rack) return res.status(200).send({ rack });
+  } catch {}
+};
+
+export const getAllRacksHandler = async (req: Request, res: Response) => {
+  try {
+    const racks = await getAllRacks();
+    if (racks) return res.status(200).send({ racks });
+  } catch {}
 };
