@@ -31,6 +31,15 @@ export const createdeviceSchema = object({
   }),
 });
 
+//FIND DEVICE BY ID VALIDATION
+
+export const findDeviceSchema = object({
+  params: object({
+    device_id: string({ required_error: "device_id is required" }),
+  }),
+});
+
 //input to validate
 
 export type createdeviceInput = TypeOf<typeof createdeviceSchema>;
+export type findDeviceInput = TypeOf<typeof findDeviceSchema>;

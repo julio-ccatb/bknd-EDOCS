@@ -5,8 +5,7 @@ export interface PortDocument extends mongoose.Document {
   interface: string;
   port_num: number;
   device_id: string;
-  target_port: string;
-  configuration: { targetPort: string };
+  config: { target_port: string; target_device: string };
   createdAt: Date;
   updatedAt: Date;
 }
@@ -20,14 +19,14 @@ const PortSchema = new mongoose.Schema(
       ref: deviceModel,
       required: true,
     },
+    config: {
+      target_port: { type: String, default: "none", trim: true },
+      target_device: { type: mongoose.Schema.Types.ObjectId, ref: deviceModel },
+    },
   },
 
   { timestamps: true }
 );
-
-PortSchema.add({
-  target_port: [PortSchema],
-});
 
 const PortModel = mongoose.model<PortDocument>("Port", PortSchema);
 
