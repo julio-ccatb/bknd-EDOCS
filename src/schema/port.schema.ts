@@ -48,8 +48,17 @@ export const connectPortSchema = object({
     }),
   }),
 });
+export const idPortSchema = object({
+  body: object({
+    port_id: string({
+      required_error: "port_id is required",
+      invalid_type_error: "port_id must be string",
+    }),
+  }),
+});
 
 //input to validate+
 
 export type createPortInput = TypeOf<typeof createPortSchema>;
 export type connectPortInput = TypeOf<typeof connectPortSchema>;
+export type idPortInput = TypeOf<typeof idPortSchema>;

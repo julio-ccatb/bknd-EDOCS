@@ -1,6 +1,6 @@
 import { Omit } from "lodash";
 import { DocumentDefinition, FilterQuery } from "mongoose";
-import { IdeviceToRack, IRackId } from "../interface/rack.interface";
+import { IdeviceToRack } from "../interface/rack.interface";
 import DeviceModel from "../models/device.model";
 import RackModel, { RackDocument } from "../models/rack.model";
 import { deviceDocument } from "../models/device.model";
