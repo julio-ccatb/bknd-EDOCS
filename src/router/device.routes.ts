@@ -9,7 +9,7 @@ import { createdeviceSchema, findDeviceSchema } from "../schema/device.schema";
 import {
   createPortSchema,
   connectPortSchema,
-  idPortSchema,
+  idPortBodySchema,
 } from "../schema/port.schema";
 import {
   disconnectPortHandler,
@@ -19,7 +19,11 @@ import {
   findDeviceHandler,
   connectPortHandler,
 } from "../controller/device.controller";
-import { getDevicePortsHandler } from "../controller/device.controller";
+import {
+  getDevicePortsHandler,
+  findPortHandler,
+} from "../controller/device.controller";
+import { idPortParamSchema } from "../schema/port.schema";
 
 const DeviceManagerRouter = Router();
 
@@ -37,6 +41,11 @@ DeviceManagerRouter.get(
   "/device/ports/:device_id",
   validateResource(findDeviceSchema),
   getDevicePortsHandler
+);
+DeviceManagerRouter.get(
+  "/ports/:port_id",
+  validateResource(idPortParamSchema),
+  findPortHandler
 );
 
 //POST
@@ -59,7 +68,7 @@ DeviceManagerRouter.post(
 );
 DeviceManagerRouter.post(
   "/device/ports/disconnect",
-  validateResource(idPortSchema),
+  validateResource(idPortBodySchema),
   disconnectPortHandler
 );
 //PATCH

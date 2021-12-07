@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import {
   connectToDevice,
   disconnectPort,
+  findPort,
   getDevicePorts,
   getDevices,
 } from "../service/device.service";
@@ -74,6 +75,17 @@ export const disconnectPortHandler = async (req: Request, res: Response) => {
   try {
     const status = await disconnectPort(req.body);
     if (status) return res.status(200).send({ message: "ports detached" });
+    return res.sendStatus(401);
+  } catch (e: any) {
+    return res.sendStatus(500);
+  }
+};
+
+export const findPortHandler = async (req: Request, res: Response) => {
+  try {
+    const port = await findPort(req.params);
+    if (port) return res.status(200).send({ port });
+
     return res.sendStatus(401);
   } catch (e: any) {
     return res.sendStatus(500);

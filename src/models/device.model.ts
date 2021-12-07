@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import RackModel from "./rack.model";
 
 export interface deviceDocument extends mongoose.Document {
+  _id: string;
   name: string;
   short_name: string;
   ip: string;

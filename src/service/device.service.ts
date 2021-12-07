@@ -3,7 +3,11 @@ import DeviceModel, { deviceDocument } from "../models/device.model";
 import PortModel, { PortDocument } from "../models/port.model";
 import { IaddPortToDevice } from "../interface/rack.interface";
 import { IdeviceId } from "../interface/device.interface";
-import { connectPortInput, idPortInput } from "../schema/port.schema";
+import {
+  connectPortInput,
+  idPortInput,
+  idPortParamInput,
+} from "../schema/port.schema";
 import { findDeviceInput } from "../schema/device.schema";
 
 export const createdevice = async (
@@ -110,4 +114,17 @@ export const disconnectPort = async (query: FilterQuery<idPortInput>) => {
   }
   return false;
 };
-export const findPort = async () => {};
+export const findPort = async (query: FilterQuery<idPortParamInput>) => {
+  try {
+    console.log({ _id: query.port_id });
+    const port = await PortModel.findOne({ _id: query.port_id });
+
+    console.log(port);
+
+    if (port) return port;
+    return false;
+  } catch (e: any) {
+    console.log(e);
+    throw new Error(e);
+  }
+};
