@@ -1,12 +1,12 @@
-import { Omit } from "lodash";
-import { DocumentDefinition, FilterQuery } from "mongoose";
-import { IdeviceToRack } from "../interface/rack.interface";
-import DeviceModel from "../models/device.model";
-import RackModel, { RackDocument } from "../models/rack.model";
-import { deviceDocument } from "../models/device.model";
+import { Omit } from 'lodash';
+import { DocumentDefinition, FilterQuery } from 'mongoose';
+import { IdeviceToRack } from '../interface/rack.interface';
+import DeviceModel from '../models/device.model';
+import RackModel, { RackDocument } from '../models/rack.model';
+import { deviceDocument } from '../models/device.model';
 
 export const createRack = async (
-  input: Omit<DocumentDefinition<RackDocument>, "createdAt" | "updatedAt">
+  input: Omit<DocumentDefinition<RackDocument>, 'createdAt' | 'updatedAt'>
 ) => {
   try {
     const rack = await RackModel.create(input);
@@ -24,14 +24,14 @@ export const adddeviceToRack = async (input: IdeviceToRack) => {
 
   if (!rack || !device) {
     throw new Error(`
-  ${!rack ? "invalid rack id" : ""}
-  ${!device ? "invalid device id" : ""}
+  ${!rack ? 'invalid rack id' : ''}
+  ${!device ? 'invalid device id' : ''}
   `);
   }
 
   device.rack_id = rack._id;
 
-  const saveddevice = await (await device.save()).populate("rack");
+  const saveddevice = await (await device.save()).populate('rack');
   console.log(saveddevice);
   if (saveddevice) return true;
 };

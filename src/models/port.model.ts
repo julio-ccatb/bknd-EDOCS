@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import deviceModel from "./device.model";
+import mongoose from 'mongoose';
+import deviceModel from './device.model';
 
 export interface PortDocument extends mongoose.Document {
   interface: string;
@@ -68,6 +68,6 @@ PortSchema.methods.disconnect = async function () {
   }
 };
 
-const PortModel = mongoose.model<PortDocument>("Port", PortSchema);
+const PortModel = mongoose.model<PortDocument>('Port', PortSchema);
 
 export default PortModel;

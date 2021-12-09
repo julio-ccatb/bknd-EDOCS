@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import RackModel from "./rack.model";
+import mongoose from 'mongoose';
+import RackModel from './rack.model';
 
 export interface deviceDocument extends mongoose.Document {
   _id: string;
@@ -19,7 +19,7 @@ export interface deviceDocument extends mongoose.Document {
 const deviceSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, trim: true },
-    short_name: { type: String, default: "", trim: true },
+    short_name: { type: String, default: '', trim: true },
     location: { type: Number, default: 1 },
     ip: { type: String, required: true, trim: true },
     description: { type: String, required: true },
@@ -31,6 +31,6 @@ const deviceSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const DeviceModel = mongoose.model<deviceDocument>("device", deviceSchema);
+const DeviceModel = mongoose.model<deviceDocument>('device', deviceSchema);
 
 export default DeviceModel;

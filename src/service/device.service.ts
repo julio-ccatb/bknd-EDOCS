@@ -1,14 +1,14 @@
-import { DocumentDefinition, FilterQuery } from "mongoose";
-import DeviceModel, { deviceDocument } from "../models/device.model";
-import PortModel, { PortDocument } from "../models/port.model";
-import { IaddPortToDevice } from "../interface/rack.interface";
-import { IdeviceId } from "../interface/device.interface";
+import { DocumentDefinition, FilterQuery } from 'mongoose';
+import DeviceModel, { deviceDocument } from '../models/device.model';
+import PortModel, { PortDocument } from '../models/port.model';
+import { IaddPortToDevice } from '../interface/rack.interface';
+import { IdeviceId } from '../interface/device.interface';
 import {
   connectPortInput,
   idPortInput,
   idPortParamInput,
-} from "../schema/port.schema";
-import { findDeviceInput } from "../schema/device.schema";
+} from '../schema/port.schema';
+import { findDeviceInput } from '../schema/device.schema';
 
 export const createdevice = async (
   input: DocumentDefinition<deviceDocument>

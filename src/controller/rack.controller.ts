@@ -1,10 +1,10 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
 import {
   adddeviceToRack,
   createRack,
   findRack,
   getAllRacks,
-} from "../service/rack.service";
+} from '../service/rack.service';
 
 export const createRackHandler = async (req: Request, res: Response) => {
   try {

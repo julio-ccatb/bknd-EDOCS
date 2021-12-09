@@ -1,13 +1,13 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
 import {
   createSession,
   findSession,
   updateSession,
-} from "../service/session.service";
-import { validatePassword } from "../service/user.service";
-import { singJWT } from "../utils/jwt.utils";
-import config from "../../config/default";
-import logger from "../utils/logger";
+} from '../service/session.service';
+import { validatePassword } from '../service/user.service';
+import { singJWT } from '../utils/jwt.utils';
+import config from '../../config/default';
+import logger from '../utils/logger';
 
 export const createSessionHandler = async (req: Request, res: Response) => {
   // Validate Password
@@ -15,13 +15,13 @@ export const createSessionHandler = async (req: Request, res: Response) => {
   const user = await validatePassword(req.body);
 
   if (!user)
-    return res.status(401).send({ message: "Invalid email or password" });
+    return res.status(401).send({ message: 'Invalid email or password' });
 
   // Create session
 
   const session = await createSession(
     user._id.toString(),
-    req.get("user-agent") || ""
+    req.get('user-agent') || ''
   );
 
   // Create Access Token
@@ -39,7 +39,22 @@ export const createSessionHandler = async (req: Request, res: Response) => {
   );
 
   // Return
-
+  res.cookie('accessToken', accessToken, {
+    maxAge: 900000, // 15 mins
+    httpOnly: true,
+    domain: config.domain,
+    path: '/',
+    sameSite: 'strict',
+    secure: false,
+  });
+  res.cookie('refreshToken', refreshToken, {
+    maxAge: 3.154e10, // 1 year
+    httpOnly: true,
+    domain: config.domain,
+    path: '/',
+    sameSite: 'strict',
+    secure: false,
+  });
   return res.status(200).send({ accessToken, refreshToken });
 };
 
@@ -56,7 +71,7 @@ export const deleteSessionHandler = async (req: Request, res: Response) => {
     const state = await updateSession({ _id: sessionId }, { valid: false });
     if (state)
       return res.status(202).send({ accessToken: null, refreshToken: null });
-    throw new Error("unable to process");
+    throw new Error('unable to process');
   } catch (err: any) {
     logger.error(err);
   }

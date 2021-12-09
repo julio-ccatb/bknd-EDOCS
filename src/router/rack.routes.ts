@@ -1,25 +1,25 @@
-import { Router } from "express";
-import { createdeviceHandler } from "../controller/device.controller";
+import { Router } from 'express';
+import { createdeviceHandler } from '../controller/device.controller';
 import {
   adddeviceToRackHandler,
   createRackHandler,
   getAllRacksHandler,
-} from "../controller/rack.controller";
-import { validateResource } from "../middleware/validateResource";
-import { createRackSchema } from "../schema/rack.schema";
-import { findRackHandler } from "../controller/rack.controller";
+} from '../controller/rack.controller';
+import { validateResource } from '../middleware/validateResource';
+import { createRackSchema } from '../schema/rack.schema';
+import { findRackHandler } from '../controller/rack.controller';
 
 const RackManagerRouter = Router();
 //METHODS
 
 //GET
-RackManagerRouter.get("/rack", getAllRacksHandler);
+RackManagerRouter.get('/rack', getAllRacksHandler);
 
-RackManagerRouter.get("/rack/:rack_id", findRackHandler);
+RackManagerRouter.get('/rack/:rack_id', findRackHandler);
 
 //POST
 RackManagerRouter.post(
-  "/rack",
+  '/rack',
   validateResource(createRackSchema),
   createRackHandler
 );

@@ -1,7 +1,11 @@
-import { Router } from "express";
-import { createUserHandler } from "../controller/user.controller";
-import { validateResource } from "../middleware/validateResource";
-import { createUserSchema } from "../schema/user.schema";
+import { Router } from 'express';
+import {
+  createUserHandler,
+  getCurrentUser,
+} from '../controller/user.controller';
+import { validateResource } from '../middleware/validateResource';
+import { createUserSchema } from '../schema/user.schema';
+import { requireUser } from '../middleware/requireUser';
 
 const UserRouter = Router();
 
@@ -9,9 +13,11 @@ const UserRouter = Router();
 
 //GET
 
+UserRouter.get('/me', requireUser, getCurrentUser);
+
 //POST
 UserRouter.post(
-  "/users",
+  '/users',
   validateResource(createUserSchema),
   createUserHandler
 );

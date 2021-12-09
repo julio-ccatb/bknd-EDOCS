@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 export interface RackDocument extends mongoose.Document {
   name: string;
@@ -16,6 +16,6 @@ const RackSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const RackModel = mongoose.model<RackDocument>("Rack", RackSchema);
+const RackModel = mongoose.model<RackDocument>('Rack', RackSchema);
 
 export default RackModel;

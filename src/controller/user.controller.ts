@@ -1,7 +1,7 @@
-import { Request, Response } from "express";
-import { omit } from "lodash";
-import { createUserInput } from "../schema/user.schema";
-import { createUser } from "../service/user.service";
+import { Request, Response } from 'express';
+import { omit } from 'lodash';
+import { createUserInput } from '../schema/user.schema';
+import { createUser } from '../service/user.service';
 
 /**
  *@name createUserHandler
@@ -11,13 +11,17 @@ import { createUser } from "../service/user.service";
  * @async
  */
 export const createUserHandler = async (
-  req: Request<{}, {}, createUserInput["body"]>,
+  req: Request<{}, {}, createUserInput['body']>,
   res: Response
 ) => {
   try {
     const user = await createUser(req.body);
-    return res.status(201).send(omit(user, "password"));
+    return res.status(201).send(omit(user, 'password'));
   } catch (e: any) {
     res.status(409).send({ err: e.message });
   }
+};
+
+export const getCurrentUser = async (req: Request, res: Response) => {
+  return res.send(res.locals.user);
 };

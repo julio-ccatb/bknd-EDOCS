@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
-import bcrypt from "bcrypt";
-import config from "config";
+import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
+import config from 'config';
 
 export interface UserDocument extends mongoose.Document {
   email: string;
@@ -23,11 +23,11 @@ const userSchema = new mongoose.Schema(
 
 // Hashes the password bedor saving the document
 
-userSchema.pre("save", async function (next) {
+userSchema.pre('save', async function (next) {
   let user = this as UserDocument;
-  if (!user.isModified("password")) return next();
+  if (!user.isModified('password')) return next();
 
-  let salt = await bcrypt.genSalt(config.get<number>("saltWorkFactor"));
+  let salt = await bcrypt.genSalt(config.get<number>('saltWorkFactor'));
 
   let hash = await bcrypt.hash(user.password, salt);
 
@@ -49,6 +49,6 @@ userSchema.methods.comparePassword = async function (
     .catch((e) => false);
 };
 
-const UserModel = mongoose.model<UserDocument>("User", userSchema);
+const UserModel = mongoose.model<UserDocument>('User', userSchema);
 
 export default UserModel;

@@ -1,9 +1,9 @@
-import { get } from "lodash";
-import { FilterQuery, UpdateQuery } from "mongoose";
-import SessionModel, { SessionDocument } from "../models/session.model";
-import { singJWT, verifyJWT } from "../utils/jwt.utils";
-import { findUser } from "./user.service";
-import config from "config";
+import config from 'config';
+import { get } from 'lodash';
+import { findUser } from './user.service';
+import { singJWT, verifyJWT } from '../utils/jwt.utils';
+import { FilterQuery, UpdateQuery } from 'mongoose';
+import SessionModel, { SessionDocument } from '../models/session.model';
 
 export const createSession = async (userId: string, userAgent: string) => {
   const session = await SessionModel.create({ user: userId, userAgent });
@@ -28,9 +28,9 @@ export const reIssueAccesToken = async ({
 }) => {
   const { decoded } = verifyJWT(refreshToken);
 
-  if (!decoded || get(decoded, "session")) return false;
+  if (!decoded || get(decoded, 'session')) return false;
 
-  const session = await SessionModel.findById(get(decoded, "session"));
+  const session = await SessionModel.findById(get(decoded, 'session'));
 
   if (!session || !session.valid) return false;
 
@@ -40,7 +40,7 @@ export const reIssueAccesToken = async ({
 
   const accessToken = singJWT(
     { ...user, session: session._id },
-    { expiresIn: config.get("accessTokenTtl") }
+    { expiresIn: config.get('accessTokenTtl') }
   );
   return accessToken;
 };
